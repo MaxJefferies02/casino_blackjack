@@ -47,8 +47,10 @@ def display():
     pass
 
 
-def hit():
-    pass
+def hit(hand):
+    card = deck.pop()
+    hand.append(card)
+    return hand
 
 
 def stick():
@@ -73,7 +75,7 @@ def split():
     pass
 
 
-def blackjack_check(hand):
+def blackjack(hand):
     for m in range(len(hand)):
         if hand[m][0] == 'Ace':
             for n in range(len(hand)):
@@ -118,10 +120,10 @@ def play():
     dealer_hand = deal()
     player_hand = deal()
     game_state(dealer_hand, player_hand)
-    if blackjack_check(player_hand):
+    if blackjack(player_hand):
         print('You got blackjack!')
         choice = True
-    elif blackjack_check(dealer_hand):
+    elif blackjack(dealer_hand):
         print('Dealer got blackjack!')
         choice = True
     else:
@@ -129,7 +131,8 @@ def play():
     if choice == False:
         choice = input('Do you want to Hit or Stand? ')
         if choice.lower()[0] == 'h':
-            print('hit!')
+            hit(player_hand)
+            game_state(dealer_hand, player_hand)
         elif choice.lower()[0] == 's':
             win_check(dealer_hand, player_hand)
             pass
