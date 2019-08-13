@@ -35,11 +35,9 @@ dealer_hand = []
 
 def deal():
     hand = []
-
+    random.shuffle(deck)
     for i in range(2):
-        random.shuffle(deck)
-        card = deck.pop()
-        hand.append(card)
+        hand.append(deck.pop())
     return hand
 
 
@@ -48,17 +46,16 @@ def display():
 
 
 def hit(hand):
-    card = deck.pop()
-    hand.append(card)
-    return hand
+    return hand.append(deck.pop())
 
 
-def stick():
+def stand(player_hand):
     pass
 
 
-def bust(dealer_hand, player_hand):
-    pass
+def bust_check(hand):
+    if score(hand) > 21:
+        return True
 
 
 def score(hand):
@@ -85,7 +82,6 @@ def blackjack(hand):
 
 
 def win_check(dealer_hand, player_hand):
-    print()
     if score(dealer_hand) >= score(player_hand):
         print('Unlucky, Dealer won this hand')
         return True
@@ -96,8 +92,19 @@ def win_check(dealer_hand, player_hand):
         return False
 
 
-def dealer_rules():
-    pass
+def dealer_turn(dealer_hand, player_hand):
+    if bust_check(player_hand):
+        print('Dealer won!')
+        return
+    elif score(dealer_hand) >= score(player_hand):
+        print('Dealer won!')
+    else:
+        while score(dealer_hand) < 17:
+            hit(dealer_hand)
+            if bust_check(dealer_hand):
+                print('You won! Dealer Bust')
+            elif score(dealer_hand) >= score(player_hand):
+                print('Dealer won!')
 
 
 def clear():
@@ -106,8 +113,12 @@ def clear():
     if os.name == 'posix':
         os.system('clear')
 
+def player_turn():
+    pass
 
-def game_state(dealer_hand, player_hand):
+
+def start_game_state(dealer_hand, player_hand):
+    print()
     print(f'Dealer: {dealer_hand[0][0]} of {dealer_hand[0][1].capitalize()}, __________')
     print(f'Your Score: {score(dealer_hand)}\n')
     print(f'You: {player_hand[0][0]} of {player_hand[0][1].capitalize()}, {player_hand[1][0]} of {player_hand[1][1].capitalize()}')
@@ -119,7 +130,7 @@ def play():
     print('Welcome to Blackjack!\n')
     dealer_hand = deal()
     player_hand = deal()
-    game_state(dealer_hand, player_hand)
+    start_game_state(dealer_hand, player_hand)
     if blackjack(player_hand):
         print('You got blackjack!')
         choice = True
@@ -132,15 +143,13 @@ def play():
         choice = input('Do you want to Hit or Stand? ')
         if choice.lower()[0] == 'h':
             hit(player_hand)
-            game_state(dealer_hand, player_hand)
+            start_game_state(dealer_hand, player_hand)
         elif choice.lower()[0] == 's':
-            win_check(dealer_hand, player_hand)
+            stand(player_hand)
+            start_game_state(dealer_hand, player_hand)
+            # win_check(dealer_hand, player_hand)
+            dealer_turn(dealer_hand, player_hand)
             pass
-        # else do a try loop
-        # Once stand then dealer plays
-        # win_check()
-        # play_again()
-    pass
 
 
 def play_again():
