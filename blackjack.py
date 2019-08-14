@@ -43,23 +43,19 @@ def deal():
     return hand
 
 
-def display():
-    pass
-
-
 def hit(hand):
     return hand.append(deck.pop())
-
-
-def stand(player_hand):
-    pass
 
 
 def bust_check(hand):
     return score(hand) > 21
 
 
-def score(hand):
+def card_value():
+    pass
+
+
+def hand_value(hand):
     """
     Make a count ace function because at the moment it rounds down for every value if there is one ace in the list
     """
@@ -82,7 +78,6 @@ def blackjack(hand):
             for n in range(len(hand)):
                 if hand[n][0] == 'King' or hand[n][0] == 'Queen' or hand[n][0] == 'Jack':
                     return True
-
 
 
 def win_check(dealer_hand, player_hand):
@@ -127,7 +122,7 @@ def play():
         print('Dealer has blackjack')
         exit()
     player_turn(dealer_hand, player_hand)
-
+    print(ace_count(player_hand))
 
 
 def play_again():
