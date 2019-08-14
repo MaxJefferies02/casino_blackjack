@@ -48,7 +48,7 @@ def hit(hand):
 
 
 def bust_check(hand):
-    return score(hand) > 21
+    return hand_value(hand) > 21
 
 
 def card_value():
@@ -105,12 +105,12 @@ def game_state(dealer_hand, player_hand):
     for i in range(len(dealer_hand)-1):
         print(f'{dealer_hand[0][0]} of {dealer_hand[0][1].capitalize()}', end=", ")
     print('__________')
-    print(f'Dealer Score: {score(dealer_hand)}\n')
+    print(f'Dealer Score: {hand_value(dealer_hand)}\n')
 
     print('Your Hand:', end=" ")
     for i in range(len(player_hand)):
         print(f'{player_hand[i][0]} of {player_hand[i][1].capitalize()}', end=", ")
-    print(f'\nYour Score: {score(player_hand)}\n')
+    print(f'\nYour Score: {hand_value(player_hand)}\n')
 
 
 def play():
@@ -122,7 +122,6 @@ def play():
         print('Dealer has blackjack')
         exit()
     player_turn(dealer_hand, player_hand)
-    print(ace_count(player_hand))
 
 
 def play_again():
