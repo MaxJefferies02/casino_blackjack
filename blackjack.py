@@ -1,7 +1,6 @@
 import random
 import os
 
-
 # suits
 suit = ['diamonds', 'clubs', 'spades', 'hearts']
 
