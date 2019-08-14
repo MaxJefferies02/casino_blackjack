@@ -6,6 +6,7 @@ ranks = [_ for _ in range(2, 11)] + ['Jack', 'Queen', 'King', 'Ace']
 suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
 symbols = ['♠', '♥', '♦', '♣']
 
+
 def get_deck():
     """Return a new deck of cards."""
     return [[rank, suit] for rank in ranks for suit in suits]
@@ -56,6 +57,7 @@ def ascii_display(hand):
         for x in range(len(lines[i])):
             print(lines[i][x], end='')
         print()
+    print()
 
 
 def ascii_hidden():
@@ -141,6 +143,7 @@ def play_again():
     if x.lower()[0] == 'y':
         game()
 
+
 def game():
     clear()
     # issue the player and dealer their first two cards
@@ -163,8 +166,8 @@ def game():
         game_state(dealer_hand, player_hand)
         # Check if bust
         if hand_value(player_hand) > 21:
-            print(f'You bust with a count of {hand_value(player_hand)}')
-            exit()
+            print(f'You bust with a count of {hand_value(player_hand)}\n')
+            play_again()
         elif hand_value(player_hand) == 21:
             print('You have 21! Dealers turn')
         else:
@@ -174,19 +177,21 @@ def game():
     # dealers turn
     clear()
     game_state(dealer_hand, player_hand)
+    # sort this logic out omg this is bad
+    # dealer rules to hit
     while hand_value(dealer_hand) < hand_value(player_hand):
         hit(dealer_hand)
         # check if bust
         if hand_value(dealer_hand) > 21:
             print(f'Dealer bust with count of {hand_value(dealer_hand)}, You win!')
-            exit()
+            play_again()
         # check who won
         if hand_value(dealer_hand) >= hand_value(player_hand):
             print(f'You Lose! Dealer has {hand_value(dealer_hand)} and you only have {hand_value(player_hand)}')
-            exit()
+            play_again()
         elif hand_value(dealer_hand) < hand_value(player_hand):
             print(f'You Win! Dealer has {hand_value(dealer_hand)} and you have {hand_value(player_hand)}')
-            exit()
+            play_again()
 
 if __name__ == '__main__':
     game()
