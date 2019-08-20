@@ -17,6 +17,11 @@ deck = get_deck()
 shuffle(deck)
 
 
+def reshuffle():
+    deck = get_deck()
+    shuffle(deck)
+
+
 def hit(hand):
     new_player_card = deck.pop()
     hand.append(new_player_card)
